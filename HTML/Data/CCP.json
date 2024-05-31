@@ -1,0 +1,14 @@
+{
+  "warningSteps": 0,
+  "totalFeatures": 3,
+  "failedFeatures": 1,
+  "totalScenarios": 10,
+  "passedScenarios": 7,
+  "totalSteps": 96,
+  "infoSteps": 0,
+  "failedScenarios": 10,
+  "passedFeatures": 1,
+  "skippedSteps": 10,
+  "passedSteps": 50,
+  "failedSteps": 4
+}

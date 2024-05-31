@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Report</title>
+    <link href='https://fonts.googleapis.com/css?family=ADLaM Display' rel='stylesheet'>
+    <style>
+        * {
+            font-family: Arial, sans-serif;
+            margin:0;
+        }
+        .chart-container {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .Charts {
+            display: flex;
+            flex-direction: row;
+            width: 90%;
+            min-height: 40vh;
+            justify-content: space-evenly;
+            box-sizing: border-box;
+
+            padding: 2%;
+            /*            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);*/
+
+        }
+        .featureInfo {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 60%;
+            height:10%;
+            text-align: center;
+        }
+        .featureInfo p {
+            text-align:center;
+            font-size:10px;
+        }
+        h1 {
+            text-align: center;
+        }
+
+        #scenariosChart{
+            display:flex;
+            justify-content:space-between;
+        }
+
+        #tableContainer {
+            max-height:100%;
+            height:auto;
+            background-color: #ffffff;
+            width:45vw;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            overflow-x: auto;
+            border: 1px  #565656;
+
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            /*            border:1px #000;*/
+        }
+
+        th, td {
+            padding: 7px;
+            text-align: center;
+            border: 1px solid #b4b4b4;
+
+        }
+
+        th {
+            background-color: #17469E;
+            font-weight: bold;
+            color:#fff;
+        }
+
+        .passed {
+            background-color: #d4edda;
+            color: #00be2d;
+        }
+
+        .failed {
+            background-color: #f8d7da;
+            color: #d90010;
+        }
+
+        .warning {
+            background-color: #fff3cd;
+            color: #ffb700;
+        }
+
+        .graph{
+            display:flex;
+            width:100%;
+            height: 40vh;
+            align-items:center;
+            margin-top:15vh;
+            justify-content:space-evenly;
+            margin-bottom:5vh;
+
+        }
+
+        .nav{
+            position:fixed;
+            align-self:top;
+            z-index:2;
+            top:0;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            width:100%;
+            height:10vh;
+            background-color:#fff;
+            backdrop-filter:blur(200px);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            /*            background-image : url("https://www.jsw.in/sites/default/files/assets/cache/images//aboutusglance534x432-resize-534x432-a7542dd51f-fcfe95b3b80f7422.jpeg");*/
+        }
+
+        .Tabs{
+            width:40%;
+            display:flex;
+            align-self:flex-end;
+            justify-content:space-between;
+            height:100%;
+            margin-right: 30px;
+            align-items:center;
+        }
+
+        .nav>img{
+            height:100%;
+            margin-left:20px;
+        }
+
+
+
+
+
+        .buttons {
+            height: 100%;
+            display: flex;
+            width: 18%;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 25px;
+            font-family: 'ADLaM Display', sans-serif;
+            background-color: #00286e;
+            height: 40%;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            border-radius: 40px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .buttons::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -75%;
+            width: 200%;
+            height: 100%;
+            background-color: #17469E;
+            transform: skewX(-25deg);
+            transition: left 0.5s ease;
+        }
+
+        .buttons:hover::before {
+            left: 100%;
+        }
+
+        .buttons:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .buttons>a {
+            text-decoration: none;
+            font-size: 15px;
+            color: #ffffff;
+            font-family: 'ADLaM Display', sans-serif;
+            z-index: 1;
+            transition: color 0.3s ease;
+        }
+
+        .buttons:hover>a {
+            color: #ffdd57;
+        }
+
+
+        .Heading {
+            font-size: 35px;
+            color: black;
+            font-family: 'ADLaM Display', sans-serif;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(90deg, rgba(0, 22, 66, 1), rgba(29, 0, 255, 1));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+            transition: transform 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .chart-container {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+            position: relative;
+            align-content:space-between;
+            justify-content:space-between;
+        }
+
+        .Canvas {
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            width: 100%;
+            height: auto;
+            height:70%;
+            position: relative;
+        }
+
+        .Canvas>canvas {
+            width: 60% !important;
+            height: auto !important;
+        }
+
+        .Team{
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:space-evenly;
+            height:55vh;
+            margin:4vh 5vw;
+            border: 1px solid #565656;
+            border-radius: 15px;
+            background-color: #fff;
+
+        }
+
+        .chart-container-coverage{
+            height:30vh;
+            width:80vw;
+            margin:5vw;
+            display:flex;
+        }
+
+        #automationCoverageChart{
+            width:100%;
+            height:100%;
+        }
+
+
+
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="nav">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTh47vQE_k39piwj64PMAasMaJYwIoIlX1qCUhVp1wggQ&s" alt="">
+    <div class="Heading">Automation Report</div>
+    <div class="Tabs">
+        <div class="buttons">
+            <a href="Reports/RetailSpark.html">SalesForce</a>
+        </div>
+        <div class="buttons">
+            <a href="">ERP</a>
+        </div>
+        <div class="buttons">
+            <a href="">CCP</a>
+        </div>
+        <div class="buttons">
+            <a href="">Retail</a>
+             </div>
+
+    </div>
+</div>
+
+
+<div class = "graph">
+    <div id="tableContainer"></div>
+    <script>
+        async function displayJSONData(urls) {
+            try {
+                // Array to hold all fetched JSON data
+                const allData = [];
+
+                // Fetch JSON data from each URL
+                for (const url of urls) {
+                    const response = await fetch(url);
+                    const jsonData = await response.json();
+                    allData.push({ data: jsonData, fileName: url });
+                }
+
+                // Create HTML table element
+                const table = document.createElement('table');
+                const tbody = document.createElement('tbody');
+
+                // Define the important fields
+                const importantFields = ['totalFeatures','totalScenarios', 'passedScenarios'];
+
+                // Create header row
+                const thead = document.createElement('thead');
+                const headerRow = document.createElement('tr');
+
+                // Add File Name header
+                const thFileName = document.createElement('th');
+                thFileName.textContent = 'Team';
+                headerRow.appendChild(thFileName);
+
+                importantFields.forEach(key => {
+                    const th = document.createElement('th');
+                    th.textContent = key;
+                    headerRow.appendChild(th);
+                });
+
+                // Add the percentage header
+                const thPercentage = document.createElement('th');
+                thPercentage.textContent = 'Pass %';
+                headerRow.appendChild(thPercentage);
+
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
+
+                // Populate table with data
+                allData.forEach(({ data, fileName }) => {
+                    const row = document.createElement('tr');
+
+                    // Add File Name cell
+                    const cellFileName = document.createElement('td');
+                    cellFileName.textContent = fileName;
+                    row.appendChild(cellFileName);
+
+                    importantFields.forEach(key => {
+                        const cell = document.createElement('td');
+                        cell.textContent = data[key];
+                        row.appendChild(cell);
+                    });
+
+                    // Calculate and append the pass percentage
+                    const passPercentage = ((data.passedScenarios / data.totalScenarios) * 100).toFixed(2);
+                    const cellPercentage = document.createElement('td');
+                    cellPercentage.textContent = passPercentage + '%';
+                    row.appendChild(cellPercentage);
+
+                    tbody.appendChild(row);
+                });
+
+                // Calculate and append the total row
+                const totalRow = document.createElement('tr');
+                const totals = { fileName: 'Total' };
+                importantFields.forEach(key => {
+                    totals[key] = allData.reduce((acc, { data }) => acc + data[key], 0);
+                    const cell = document.createElement('td');
+                    cell.textContent = totals[key];
+                    totalRow.appendChild(cell);
+                });
+
+                // Add File Name cell for the total row
+                const cellFileNameTotal = document.createElement('td');
+                cellFileNameTotal.textContent = totals.fileName;
+                totalRow.insertBefore(cellFileNameTotal, totalRow.firstChild);
+
+                // Calculate and append the total pass percentage
+                const totalPassPercentage = ((totals.passedScenarios / totals.totalScenarios) * 100).toFixed(2);
+                const totalCellPercentage = document.createElement('td');
+                totalCellPercentage.textContent = totalPassPercentage + '%';
+                totalRow.appendChild(totalCellPercentage);
+
+                tbody.appendChild(totalRow);
+
+                // Append table to container
+                table.appendChild(tbody);
+                document.getElementById('tableContainer').appendChild(table);
+            } catch (error) {
+                console.error('Error fetching JSON:', error);
+            }
+        }
+
+        // Call the function with your JSON file URLs
+        displayJSONData(['Data/data.json', 'Data/ERP.json','Data/retail.json','Data/retail.json','Data/retail.json']);
+    </script>
+    <canvas id="comparisonChart" width="450" height="200"></canvas>
+    <script>
+        async function displayJSONData(urls) {
+            try {
+                const allData = [];
+
+                for (const url of urls) {
+                    const response = await fetch(url);
+                    const jsonData = await response.json();
+                    allData.push({ data: jsonData, fileName: url });
+                }
+
+                createBarGraph(allData);
+            } catch (error) {
+                console.error('Error fetching JSON:', error);
+            }
+        }
+
+        function createBarGraph(allData) {
+            const labels = ['totalScenarios', 'passedScenarios', 'totalSteps', 'passedSteps'];
+
+            const datasets = allData.map(({ data, fileName }, index) => ({
+                label: fileName,
+                data: [
+                    data.totalScenarios,
+                    data.passedScenarios,
+                    data.totalSteps,
+                    data.passedSteps
+                ],
+                backgroundColor: getColor(index, 0.2),
+                borderColor: getColor(index, 1),
+                borderWidth: 1
+            }));
+
+            const ctx = document.getElementById('comparisonChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                display: true
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function getColor(index, opacity) {
+            const colors = [
+                'rgba(255, 99, 132, OPACITY)',
+                'rgba(54, 162, 235, OPACITY)',
+                'rgba(255, 206, 86, OPACITY)',
+                'rgba(75, 192, 192, OPACITY)',
+                'rgba(153, 102, 255, OPACITY)',
+                'rgba(255, 159, 64, OPACITY)'
+            ];
+            return colors[index % colors.length].replace('OPACITY', opacity);
+        }
+
+        displayJSONData(['Data/data.json', 'Data/ERP.json','Data/retail.json']);
+    </script>
+</div>
+
+
+
+
+<div class="Team">
+<h1>SalesForce</h1>
+<div class="Charts">
+    <div class="chart-container">
+        <div class="Canvas">
+        <canvas id="featuresChartSF"></canvas>
+        </div>
+        <a class="featureInfo" id="featuresInfoSF" href="automationReport_ConstuctFlow_$%7BdateTimeString%7D.html"></a>
+    </div>
+    <div class="chart-container">
+        <div class="Canvas">
+        <canvas id="scenariosChartSF"></canvas>
+        </div>
+        <a class="featureInfo" id="scenariosInfoSF"></a>
+    </div>
+    <div class="chart-container">
+        <div class="Canvas">
+        <canvas id="stepsChartSF"></canvas>
+        </div>
+        <a class="featureInfo" id="stepsInfoSF"></a>
+    </div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    fetch('Data/SF.json')
+        .then(response => response.json())
+        .then(data => {
+        const totalFeatures = data.passedFeatures + data.failedFeatures;
+        const passFeaturePercentageSF = ((data.passedFeatures / totalFeatures) * 100).toFixed(2);
+        const totalScenarios = data.passedScenarios + data.failedScenarios;
+        const passScenarioPercentageSF = ((data.passedScenarios / totalScenarios) * 100).toFixed(2);
+        const totalSteps = data.passedSteps + data.failedSteps + data.skippedSteps;
+        const passStepPercentageSF = ((data.passedSteps / totalSteps) * 100).toFixed(2);
+
+        const featuresCtx = document.getElementById('featuresChartSF').getContext('2d');
+        new Chart(featuresCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Passed Features', 'Failed Features'],
+                datasets: [{
+                    data: [
+                        data.passedFeatures,
+                        data.failedFeatures
+                    ],
+                    backgroundColor: ['#00be2d', '#d90010'],
+                    hoverBackgroundColor: ['#64B5F6', '#FFB74D']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed;
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+
+        document.getElementById('featuresInfoSF').innerHTML = `
+                <p><strong>Passed Features:</strong> ${data.passedFeatures}</p>
+                <p><strong>Failed Features:</strong> ${data.failedFeatures}</p>
+            `;
+
+        const scenariosCtx = document.getElementById('scenariosChartSF').getContext('2d');
+        new Chart(scenariosCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Passed Scenarios', 'Failed Scenarios'],
+                datasets: [{
+                    data: [
+                        data.passedScenarios,
+                        data.failedScenarios
+                    ],
+                    backgroundColor: ['#00be2d', '#d90010'],
+                    hoverBackgroundColor: ['#64B5F6', '#FFB74D']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed;
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Populate Scenarios Info
+        document.getElementById('scenariosInfoSF').innerHTML = `
+                <p><strong>Passed Scenarios:</strong> ${data.passedScenarios}</p>
+                <p><strong>Failed Scenarios:</strong> ${data.failedScenarios}</p>
+            `;
+
+        // Steps Chart
+        const stepsCtx = document.getElementById('stepsChartSF').getContext('2d');
+        new Chart(stepsCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Passed Steps', 'Failed Steps', 'Skipped Steps'],
+                datasets: [{
+                    data: [
+                        data.passedSteps,
+                        data.failedSteps,
+                        data.skippedSteps
+                    ],
+                    backgroundColor: ['#00be2d', '#d90010', '#9E9E9E'],
+                    hoverBackgroundColor: ['#AED581', '#FF7043', '#BDBDBD']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed;
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Populate Steps Info
+        document.getElementById('stepsInfoSF').innerHTML = `
+                <p><strong>Passed Steps:</strong> ${data.passedSteps}</p>
+                <p><strong>Failed Steps:</strong> ${data.failedSteps}</p>
+
+            `;
+    })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
+
+
+<div class="Team">
+    <h1>ERP</h1>
+    <div class="Charts">
+        <div class="chart-container">
+            <div class="Canvas">
+                <canvas id="featuresChartERP"></canvas>
+            </div>
+            <a class="featureInfo" id="featuresInfoERP" href="Reports/RetailSpark.html"></a>
+        </div>
+        <div class="chart-container">
+            <div class="Canvas">
+                <canvas id="scenariosChartERP"></canvas>
+            </div>
+            <a class="featureInfo" id="scenariosInfoERP"></a>
+        </div>
+        <div class="chart-container">
+            <div class="Canvas">
+                <canvas id="stepsChartERP"></canvas>
+            </div>
+            <a class="featureInfo" id="stepsInfoERP"></a>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    fetch('Data/ERP.json')
+        .then(response => response.json())
+        .then(data => {
+        const totalFeatures = data.passedFeatures + data.failedFeatures;
+        const passFeaturePercentageSF = ((data.passedFeatures / totalFeatures) * 100).toFixed(2);
+        const totalScenarios = data.passedScenarios + data.failedScenarios;
+        const passScenarioPercentageSF = ((data.passedScenarios / totalScenarios) * 100).toFixed(2);
+        const totalSteps = data.passedSteps + data.failedSteps + data.skippedSteps;
+        const passStepPercentageSF = ((data.passedSteps / totalSteps) * 100).toFixed(2);
+
+        const featuresCtx = document.getElementById('featuresChartERP').getContext('2d');
+        new Chart(featuresCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Passed Features', 'Failed Features'],
+                datasets: [{
+                    data: [
+                        data.passedFeatures,
+                        data.failedFeatures
+                    ],
+                    backgroundColor: ['#00be2d', '#d90010'],
+                    hoverBackgroundColor: ['#64B5F6', '#FFB74D']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed;
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+
+        document.getElementById('featuresInfoERP').innerHTML = `
+                <p><strong>Passed Features:</strong> ${data.passedFeatures}</p>
+                <p><strong>Failed Features:</strong> ${data.failedFeatures}</p>
+            `;
+
+        const scenariosCtx = document.getElementById('scenariosChartERP').getContext('2d');
+        new Chart(scenariosCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Passed Scenarios', 'Failed Scenarios'],
+                datasets: [{
+                    data: [
+                        data.passedScenarios,
+                        data.failedScenarios
+                    ],
+                    backgroundColor: ['#00be2d', '#d90010'],
+                    hoverBackgroundColor: ['#64B5F6', '#FFB74D']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed;
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Populate Scenarios Info
+        document.getElementById('scenariosInfoERP').innerHTML = `
+                <p><strong>Passed Scenarios:</strong> ${data.passedScenarios}</p>
+                <p><strong>Failed Scenarios:</strong> ${data.failedScenarios}</p>
+            `;
+
+        // Steps Chart
+        const stepsCtx = document.getElementById('stepsChartERP').getContext('2d');
+        new Chart(stepsCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Passed Steps', 'Failed Steps', 'Skipped Steps'],
+                datasets: [{
+                    data: [
+                        data.passedSteps,
+                        data.failedSteps,
+                        data.skippedSteps
+                    ],
+                    backgroundColor: ['#00be2d', '#d90010', '#9E9E9E'],
+                    hoverBackgroundColor: ['#AED581', '#FF7043', '#BDBDBD']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed;
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Populate Steps Info
+        document.getElementById('stepsInfoERP').innerHTML = `
+                <p><strong>Passed Steps:</strong> ${data.passedSteps}</p>
+                <p><strong>Failed Steps:</strong> ${data.failedSteps}</p>
+
+            `;
+    })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
+
+<div class="Team">
+    <h1>CCP</h1>
+    <div class="Charts">
+        <div class="chart-container">
+            <div class="Canvas">
+                <canvas id="featuresChartCCP"></canvas>
+            </div>
+            <a class="featureInfo" id="featuresInfoCCP" href="automationReport_ConstuctFlow_$%7BdateTimeString%7D.html"></a>
+        </div>
+        <div class="chart-container">
+            <div class="Canvas">
+                <canvas id="scenariosChartCCP"></canvas>
+            </div>
+            <a class="featureInfo" id="scenariosInfoCCP"></a>
+        </div>
+        <div class="chart-container">
+            <div class="Canvas">
+                <canvas id="stepsChartCCP"></canvas>
+            </div>
+            <a class="featureInfo" id="stepsInfoCCP"></a>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    fetch('Data/CCP.json')
+        .then(response => response.json())
+        .then(data => {
+        const totalFeatures = data.passedFeatures + data.failedFeatures;
+        const passFeaturePercentageSF = ((data.passedFeatures / totalFeatures) * 100).toFixed(2);
+        const totalScenarios = data.passedScenarios + data.failedScenarios;
+        const passScenarioPercentageSF = ((data.passedScenarios / totalScenarios) * 100).toFixed(2);
+        const totalSteps = data.passedSteps + data.failedSteps + data.skippedSteps;
+        const passStepPercentageSF = ((data.passedSteps / totalSteps) * 100).toFixed(2);
+
+        const featuresCtx = document.getElementById('featuresChartCCP').getContext('2d');
+        new Chart(featuresCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Passed Features', 'Failed Features'],
+                datasets: [{
+                    data: [
+                        data.passedFeatures,
+                        data.failedFeatures
+                    ],
+                    backgroundColor: ['#00be2d', '#d90010'],
+                    hoverBackgroundColor: ['#64B5F6', '#FFB74D']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed;
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+
+        document.getElementById('featuresInfoCCP').innerHTML = `
+                <p><strong>Passed Features:</strong> ${data.passedFeatures}</p>
+                <p><strong>Failed Features:</strong> ${data.failedFeatures}</p>
+            `;
+
+        const scenariosCtx = document.getElementById('scenariosChartCCP').getContext('2d');
+        new Chart(scenariosCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Passed Scenarios', 'Failed Scenarios'],
+                datasets: [{
+                    data: [
+                        data.passedScenarios,
+                        data.failedScenarios
+                    ],
+                    backgroundColor: ['#00be2d', '#d90010'],
+                    hoverBackgroundColor: ['#64B5F6', '#FFB74D']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed;
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Populate Scenarios Info
+        document.getElementById('scenariosInfoCCP').innerHTML = `
+                <p><strong>Passed Scenarios:</strong> ${data.passedScenarios}</p>
+                <p><strong>Failed Scenarios:</strong> ${data.failedScenarios}</p>
+            `;
+
+        // Steps Chart
+        const stepsCtx = document.getElementById('stepsChartCCP').getContext('2d');
+        new Chart(stepsCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Passed Steps', 'Failed Steps', 'Skipped Steps'],
+                datasets: [{
+                    data: [
+                        data.passedSteps,
+                        data.failedSteps,
+                        data.skippedSteps
+                    ],
+                    backgroundColor: ['#00be2d', '#d90010', '#9E9E9E'],
+                    hoverBackgroundColor: ['#AED581', '#FF7043', '#BDBDBD']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed;
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Populate Steps Info
+        document.getElementById('stepsInfoCCP').innerHTML = `
+                <p><strong>Passed Steps:</strong> ${data.passedSteps}</p>
+                <p><strong>Failed Steps:</strong> ${data.failedSteps}</p>
+
+            `;
+    })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
+
+<div class="Team">
+    <h1>Retail</h1>
+    <div class="Charts">
+        <div class="chart-container">
+            <div class="Canvas">
+                <canvas id="featuresChartRT"></canvas>
+            </div>
+            <a class="featureInfo" id="featuresInfoRT" href="automationReport_ConstuctFlow_$%7BdateTimeString%7D.html"></a>
+        </div>
+        <div class="chart-container">
+            <div class="Canvas">
+                <canvas id="scenariosChartRT"></canvas>
+            </div>
+            <a class="featureInfo" id="scenariosInfoRT"></a>
+        </div>
+        <div class="chart-container">
+            <div class="Canvas">
+                <canvas id="stepsChartRT"></canvas>
+            </div>
+            <a class="featureInfo" id="stepsInfoRT"></a>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    fetch('Data/retail.json')
+        .then(response => response.json())
+        .then(data => {
+        const totalFeatures = data.passedFeatures + data.failedFeatures;
+        const passFeaturePercentageSF = ((data.passedFeatures / totalFeatures) * 100).toFixed(2);
+        const totalScenarios = data.passedScenarios + data.failedScenarios;
+        const passScenarioPercentageSF = ((data.passedScenarios / totalScenarios) * 100).toFixed(2);
+        const totalSteps = data.passedSteps + data.failedSteps + data.skippedSteps;
+        const passStepPercentageSF = ((data.passedSteps / totalSteps) * 100).toFixed(2);
+
+        const featuresCtx = document.getElementById('featuresChartRT').getContext('2d');
+        new Chart(featuresCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Passed Features', 'Failed Features'],
+                datasets: [{
+                    data: [
+                        data.passedFeatures,
+                        data.failedFeatures
+                    ],
+                    backgroundColor: ['#00be2d', '#d90010'],
+                    hoverBackgroundColor: ['#64B5F6', '#FFB74D']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed;
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+
+        document.getElementById('featuresInfoRT').innerHTML = `
+                <p><strong>Passed Features:</strong> ${data.passedFeatures}</p>
+                <p><strong>Failed Features:</strong> ${data.failedFeatures}</p>
+            `;
+
+        const scenariosCtx = document.getElementById('scenariosChartRT').getContext('2d');
+        new Chart(scenariosCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Passed Scenarios', 'Failed Scenarios'],
+                datasets: [{
+                    data: [
+                        data.passedScenarios,
+                        data.failedScenarios
+                    ],
+                    backgroundColor: ['#00be2d', '#d90010'],
+                    hoverBackgroundColor: ['#64B5F6', '#FFB74D']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed;
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Populate Scenarios Info
+        document.getElementById('scenariosInfoRT').innerHTML = `
+                <p><strong>Passed Scenarios:</strong> ${data.passedScenarios}</p>
+                <p><strong>Failed Scenarios:</strong> ${data.failedScenarios}</p>
+            `;
+
+        // Steps Chart
+        const stepsCtx = document.getElementById('stepsChartRT').getContext('2d');
+        new Chart(stepsCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Passed Steps', 'Failed Steps', 'Skipped Steps'],
+                datasets: [{
+                    data: [
+                        data.passedSteps,
+                        data.failedSteps,
+                        data.skippedSteps
+                    ],
+                    backgroundColor: ['#00be2d', '#d90010', '#9E9E9E'],
+                    hoverBackgroundColor: ['#AED581', '#FF7043', '#BDBDBD']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed;
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Populate Steps Info
+        document.getElementById('stepsInfoRT').innerHTML = `
+                <p><strong>Passed Steps:</strong> ${data.passedSteps}</p>
+                <p><strong>Failed Steps:</strong> ${data.failedSteps}</p>
+
+            `;
+    })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
+
+
+
+
+</body>
+</html>
