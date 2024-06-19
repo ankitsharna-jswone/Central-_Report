@@ -253,6 +253,7 @@ th {
     align-items: center;
     box-sizing: border-box;
     width: 38%;
+    border:1px solid #535353;
     /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
     padding: 1%;
     border-radius: 20px;
