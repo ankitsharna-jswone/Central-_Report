@@ -1,6 +1,8 @@
 * {
     font-family: Arial, sans-serif;
     margin:0;
+    box-sizing: border-box;
+
 }
 .chart-container {
     width: 30%;
@@ -47,15 +49,18 @@ h1 {
 
 #tableContainer {
     min-height: 100%;
-    background-color: #ffffff;
-    padding: 2%;
+    /* background-color: #ffffff; */
+
     /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
     max-width: 100%;
     overflow-x: auto;
-    border-radius: 20px;
-    border: 1px  #565656;
+    padding: 1% 1.5%;
+
+    border: 1px solid #565656;
+    border-radius: 10px;
     display: flex;
     align-items: center;
+
     box-sizing: border-box;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 
@@ -103,13 +108,20 @@ th {
 .graph{
     display:flex;
     width:100%;
-    height: 40vh;
+    height: 35vh;
     align-items:center;
-    margin-top:15vh;
+    padding: 0 2%;
     justify-content:space-evenly;
     margin-bottom:5vh;
+    box-sizing: border-box;
 
 }
+
+#automationCoverageChart{
+    width: 100%;
+}
+
+
 
 .nav{
     position:fixed;
@@ -121,7 +133,7 @@ th {
     justify-content:space-between;
     width:100%;
     height:10vh;
-    background-color:#fff;
+    /* background-color:#fff; */
     backdrop-filter:blur(200px);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     /*            background-image : url("https://www.jsw.in/sites/default/files/assets/cache/images//aboutusglance534x432-resize-534x432-a7542dd51f-fcfe95b3b80f7422.jpeg");*/
@@ -253,7 +265,7 @@ th {
     align-items: center;
     box-sizing: border-box;
     width: 38%;
-    border:1px solid #535353;
+    border: 1px solid black;
     /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
     padding: 1%;
     border-radius: 20px;
@@ -274,7 +286,7 @@ th {
     margin:4vh 5vw;
     border: 1px solid #565656;
     border-radius: 15px;
-    background-color: #fff;
+    /* background-color: #fff; */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 
 }
@@ -285,14 +297,27 @@ th {
 }
 
 .chart-container-coverage{
-    height:30vh;
+    height:35vh;
     width:80vw;
-    margin:5vw;
+    align-self: center;
+    justify-self: center;
+    margin:2vw 5vw 2vw 9vw;
     display:flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 2%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top:15vh;
+}
+.chart-container-coverage:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 #automationCoverageChart{
-    width:100%;
+    width:80%;
     height:100%;
 }
 

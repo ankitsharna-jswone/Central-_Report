@@ -15,7 +15,7 @@
 <body>
 
 <div class="nav">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTh47vQE_k39piwj64PMAasMaJYwIoIlX1qCUhVp1wggQ&s" alt="">
+    <img src="./images-removebg-preview.png" alt="">
     <div class="Heading">Automation Report</div>
     <div class="Tabs">
         <div class="buttons">
@@ -33,6 +33,79 @@
 
     </div>
 </div>
+
+<div class="chart-container-coverage">
+    <canvas id="automationCoverageChart"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    const colors = {
+        "SF": 'rgba(75, 192, 192, 1)',
+        "ERP": 'rgba(255, 99, 132, 1)',
+        "Retail": 'rgba(54, 162, 235, 1)',
+        "CCP": 'rgba(255, 206, 86, 1)',
+        "Master": 'rgba(153, 102, 255, 1)'
+    };
+
+    async function fetchData() {
+        const response = await fetch('Data/coverage.json');
+        const data = await response.json();
+        return data;
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        const data = await fetchData();
+        const ctx = document.getElementById('automationCoverageChart').getContext('2d');
+        const datasets = Object.keys(data).map(team => ({
+            label: team,
+            data: data[team],
+            borderColor: colors[team],
+            backgroundColor: colors[team].replace('1)', '0.2)'),
+            fill: false,
+            tension: 0.1
+        }));
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: datasets
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                        ,
+                        grid: {
+                            display: true
+                        },
+                        grid: {
+                            display: false
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    }
+                }
+            }
+
+
+        });
+    });
+</script>
+
 
 
 <div class = "graph">
@@ -231,7 +304,6 @@
 
     </div>
 </div>
-
 
 
 
